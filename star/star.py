@@ -42,7 +42,7 @@ def main():
     database = gd.api.save.load()
     levels = database.load_my_levels()
     #level = levels.get_by_name("star test")
-    level = client.run(client.get_level(34281293)) # id
+    level = client.run(client.get_level(3884458)) # id
     editor = level.open_editor()
 
     startspeed = editor.get_start_speed()
@@ -65,9 +65,19 @@ def main():
             if star is not None:
                 totalstar.append(star)
         portal_count += 1
+        
+    totalstar.sort(reverse=True)
+    
+    weights = [1.25, 1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0]
+    
     i = 0
-    for star in totalstar:
-        totalstar[i] = round(star, 2)
+    for star, weight in itertools.zip_longest(totalstar, weights):
+        if weight is None:
+            weight = 0
+        if star is None:
+            break
+        print(star, weight)
+        totalstar[i] = round(star*weight, 2)
         i += 1
     print(totalstar)
     return round(average(totalstar), 2)
