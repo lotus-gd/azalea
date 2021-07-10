@@ -23,6 +23,7 @@ public:
 
 	bool IsDone() const;
 	float GetDeltaTime() const;
+	float GetDifficulty() const;
 
 	Pathfinder(const Pathfinder&) = delete;
 	Pathfinder(Pathfinder&&) = delete;

@@ -37,7 +37,12 @@ DWORD WINAPI MainThread(void* hModule)
     else
         printf("Failed to initalise.\nPress enter to exit...\n");
 
-    while (!Pathfinder::GetInstance()->IsDone()) Sleep(100);
+    while (!Pathfinder::GetInstance()->IsDone())
+    {
+        Sleep(100);
+        if (GetAsyncKeyState('P'))
+            printf("Difficulty rating: %f%%\n", Pathfinder::GetInstance()->GetDifficulty());
+    }
     Sleep(5000);
 
     MH_Uninitialize();

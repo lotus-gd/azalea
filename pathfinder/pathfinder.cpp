@@ -51,7 +51,7 @@ void Pathfinder::Success()
 	replayHandler.Success();
 	if (replayHandler.IsDone())
 	{
-		printf("Done.\n");
+		printf("Done.        \n");
 		printf("Difficulty rating: %f%%\n", replayHandler.GetDifficulty());
 	}
 }
@@ -62,7 +62,7 @@ void Pathfinder::Fail(gd::PlayLayer* playLayer)
 	replayHandler.Fail(frame);
 	if (replayHandler.IsDone())
 	{
-		printf("Done.\n");
+		printf("Done.         \n");
 		printf("Difficulty rating: %f%%\n", replayHandler.GetDifficulty());
 		Hooks::PlayLayer::levelComplete(playLayer);
 	}
@@ -78,4 +78,9 @@ bool Pathfinder::IsDone() const
 float Pathfinder::GetDeltaTime() const
 {
 	return 1.0f / fps;
+}
+
+float Pathfinder::GetDifficulty() const
+{
+	return replayHandler.GetDifficulty();
 }

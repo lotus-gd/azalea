@@ -25,6 +25,8 @@ bool Hooks::Initialise()
 	CREATE_GD_HOOK(0x20BF00, PlayLayer::resetLevel);
 	CREATE_GD_HOOK(0x111500, PlayLayer::pushButton);
 	CREATE_GD_HOOK(0x111660, PlayLayer::releaseButton);
+	CREATE_GD_HOOK(0x208870, PlayLayer::draw);
+	CREATE_GD_HOOK(0x200020, PlayLayer::visit);
 
 	if (MH_EnableHook(MH_ALL_HOOKS) != MH_OK) return false;
 
@@ -72,6 +74,18 @@ void __fastcall Hooks::PlayLayer::resetLevel_h(gd::PlayLayer* self)
 {
 	Pathfinder::GetInstance()->OnReset(self);
 	resetLevel(self);
+}
+
+void __fastcall Hooks::PlayLayer::draw_h(CCLayer* self)
+{
+	if (self != gd::GameManager::sharedState()->getPlayLayer())
+		draw(self);
+}
+
+void __fastcall Hooks::PlayLayer::visit_h(CCNode* node)
+{
+	if (node != gd::GameManager::sharedState()->getPlayLayer())
+		visit(node);
 }
 
 uint32_t __fastcall Hooks::PlayLayer::pushButton_h(gd::PlayLayer* self, void*, int param, bool button)
